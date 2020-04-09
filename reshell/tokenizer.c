@@ -4,10 +4,12 @@ char** tokenizer(char *line, char **argv)
 {
 	char *argc;
 	char *writer;
-	char *linecpy;
+	char *linecpy = (char *) malloc(100);
 	int iter1 = 0, iter2 = 0;
 
+	printf ("tokenizer bienvenue\n");
 	strcpy(linecpy, line);
+	printf ("line copied");
 	argc = strtok(line, DELIMITER);
 	while (argc != NULL)
 	{

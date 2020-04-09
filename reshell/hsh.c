@@ -2,22 +2,27 @@
 
 int main ()
 {
-        char *line;
+        char *line = NULL;
         char **argv;
         pid_t pid1;
         ssize_t line_chk = 0;
         size_t size = IP_SIZE;
 
-        write(1, "$>", 3);
+        write(STDIN_FILENO, "$>", 3);
         line_chk = getline(&line, &size, stdin);
 
         while (strcmp(line, SH_KILLER) != 0)
         {
                 if (line_chk == -1)
-                        write(1, " ", 1);
-                else
+                        write(STDIN_FILENO, "failed reading input", 21);
+                if (line_chk > 0)
+		{
+			printf("tokenizer entering\n");
                         tokenizer(line, &argv);
-
+			printf("%s\n", argv[0]);
+		}
+		write(STDIN_FILENO, "$>", 3);
+		line_chk = getline(&line, &size, stdin);
         }
         printf("%s", argv[0]);
         return (0);
