@@ -1,7 +1,8 @@
 #include "shell.h"
 
-char** tokenizer(char *line, char **argv)
+char** tokenizer(char *line)
 {
+	char **argv;
 	char *argc;
 	char *writer;
 	char *linecpy = (char *) malloc(100);
@@ -9,7 +10,7 @@ char** tokenizer(char *line, char **argv)
 
 	printf ("tokenizer bienvenue\n");
 	strcpy(linecpy, line);
-	printf ("line copied");
+	printf ("line copied: %s\n", linecpy);
 	argc = strtok(line, DELIMITER);
 	while (argc != NULL)
 	{
@@ -19,7 +20,7 @@ char** tokenizer(char *line, char **argv)
 	argv = malloc((iter1 + 1) * sizeof(char *));
 	if (argv == NULL)
 	{
-		write(1,"failed line allocation", 23);
+		write(1,"failed line allocation\n", 23);
 		free(argv);
 		exit(0);
 	}
@@ -29,7 +30,7 @@ char** tokenizer(char *line, char **argv)
 		argv[iter2] = malloc(strlen(writer) * sizeof(char));
 		if (argv[iter2] == NULL)
 		{
-			write(1, "failed command allocation", 26);
+			write(1, "failed command allocation\n", 26);
 			while (iter2 >= 0)
 			{
 				free(argv[iter2]);

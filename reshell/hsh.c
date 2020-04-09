@@ -18,7 +18,7 @@ int main ()
                 if (line_chk > 0)
 		{
 			printf("tokenizer entering\n");
-                        tokenizer(line, &argv);
+                        argv = tokenizer(line);
 			printf("%s\n", argv[0]);
 		}
 		write(STDIN_FILENO, "$>", 3);
