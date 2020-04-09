@@ -1,11 +1,14 @@
 #include "shell.h"
 
-int main (int ac __attribute__((unused)), char *av[] __attribute__((unused)),
-	  char *env[])
+int main (
+	int ac __attribute__((unused)),
+	char *av[] __attribute__((unused)),
+	char *env[]
+	)
 {
         char *line = NULL;
         char **argv;
-        pid_t pid1;
+        pid_t __attribute__((unused)) pid1;
         ssize_t line_chk = 0;
         size_t size = IP_SIZE;
 	char *path = "PATH";
@@ -24,6 +27,7 @@ int main (int ac __attribute__((unused)), char *av[] __attribute__((unused)),
 		}
                 if (line_chk > 0)
 		{
+			printf("%s\n", path);
 			printf("tokenizer entering\n");
                         argv = tokenizer(line);
 			printf("%s\n", argv[0]);

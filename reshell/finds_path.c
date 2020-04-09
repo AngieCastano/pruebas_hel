@@ -29,4 +29,3 @@ char *finds_path(char *env[], char *path)
 	}
 	return (env[i]);
 }
-
