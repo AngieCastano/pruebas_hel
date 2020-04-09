@@ -5,9 +5,14 @@ char** tokenizer(char *line)
 	char **argv;
 	char *argc;
 	char *writer;
-	char *linecpy = (char *) malloc(100);
+	char *linecpy = malloc(strlen(line) * sizeof(char));
 	int iter1 = 0, iter2 = 0;
 
+	if (linecpy == NULL)
+	{
+		free(linecpy);
+		exit(0);
+	}
 	printf ("tokenizer bienvenue\n");
 	strcpy(linecpy, line);
 	printf ("line copied: %s\n", linecpy);
@@ -22,6 +27,7 @@ char** tokenizer(char *line)
 	{
 		write(1,"failed line allocation\n", 23);
 		free(argv);
+		free(linecpy);
 		exit(0);
 	}
 	writer = strtok(linecpy, DELIMITER);
@@ -36,6 +42,8 @@ char** tokenizer(char *line)
 				free(argv[iter2]);
 				iter2--;
 			}
+			free(argv);
+			free(linecpy);
 			exit(0);
 		}
 		strcpy(argv[iter2], writer);
@@ -43,6 +51,7 @@ char** tokenizer(char *line)
 		writer = strtok(NULL, DELIMITER);
 		iter2++;
 	}
+	free(linecpy);
 	argv[iter1] = '\0';
 	return (argv);
 

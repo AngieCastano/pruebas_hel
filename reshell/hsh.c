@@ -12,6 +12,7 @@ int main (
         ssize_t line_chk = 0;
         size_t size = IP_SIZE;
 	char *path = "PATH";
+	char **pathoken;
 
 	path = finds_path(env, path);
 
@@ -23,18 +24,22 @@ int main (
                 if (line_chk == -1)
 		{
                         write(STDIN_FILENO, "failed reading input\n", 22);
+			free(line);
 			exit (0);
 		}
                 if (line_chk > 0)
 		{
 			printf("%s\n", path);
 			printf("tokenizer entering\n");
+			pathoken = tokenizer(path);
+			printf("pathoken: %s\n", pathoken[1]);
                         argv = tokenizer(line);
-			printf("%s\n", argv[0]);
+			printf("argv: %s\n", argv[0]);
 		}
 		write(STDIN_FILENO, "$>", 3);
 		line_chk = getline(&line, &size, stdin);
         }
+	free(line);
         printf("bye! bitches\n");
         return (0);
 }

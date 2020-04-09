@@ -2,7 +2,7 @@
 #define SHELL_H
 #define IP_SIZE 200
 #define SH_KILLER "quit\n"
-#define DELIMITER " \n"
+#define DELIMITER "=: \n"
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
