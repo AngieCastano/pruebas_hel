@@ -6,6 +6,7 @@ char** tokenizer(char *line)
 	char *argc;
 	char *writer;
 	char *linecpy = malloc(strlen(line) * sizeof(char));
+	char *linecpy2 = malloc(strlen(line) * sizeof(char));
 	int iter1 = 0, iter2 = 0;
 
 	if (linecpy == NULL)
@@ -15,8 +16,9 @@ char** tokenizer(char *line)
 	}
 	printf ("tokenizer bienvenue\n");
 	strcpy(linecpy, line);
+	strcpy(linecpy2, line);
 	printf ("line copied: %s\n", linecpy);
-	argc = strtok(line, DELIMITER);
+	argc = strtok(linecpy, DELIMITER);
 	while (argc != NULL)
 	{
 		argc = strtok(NULL, DELIMITER);
@@ -30,7 +32,7 @@ char** tokenizer(char *line)
 		free(linecpy);
 		exit(0);
 	}
-	writer = strtok(linecpy, DELIMITER);
+	writer = strtok(linecpy2, DELIMITER);
 	while (writer != NULL && iter2 <= iter1)
 	{
 		argv[iter2] = malloc(strlen(writer) * sizeof(char));
@@ -51,7 +53,7 @@ char** tokenizer(char *line)
 		writer = strtok(NULL, DELIMITER);
 		iter2++;
 	}
-	free(linecpy);
+	free(linecpy2);
 	argv[iter1] = '\0';
 	return (argv);
 
