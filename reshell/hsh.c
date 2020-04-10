@@ -18,15 +18,9 @@ int main (
 
         write(STDIN_FILENO, "$>", 3);
         line_chk = getline(&line, &size, stdin);
-
+	valid_simple_free(line, line_chk, 1);
         while (strcmp(line, SH_KILLER) != 0)
         {
-                if (line_chk == -1)
-		{
-                        write(STDIN_FILENO, "failed reading input\n", 22);
-			free(line);
-			exit (0);
-		}
                 if (line_chk > 0)
 		{
 			printf("%s\n", path);
@@ -38,6 +32,7 @@ int main (
 		}
 		write(STDIN_FILENO, "$>", 3);
 		line_chk = getline(&line, &size, stdin);
+		valid_simple_free(line, line_chk, 1);
         }
 	free(line);
         printf("bye! bitches\n");

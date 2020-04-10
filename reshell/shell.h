@@ -10,8 +10,10 @@
 #include <string.h>
 #include <sys/types.h>
 #include <dirent.h>
-
 char** tokenizer(char *line);
 char *finds_path(char **env, char *path);
 int str_cmp_first_chars(char *larga, char* peque);
+void escoba_double(char **recogedor, int fallos);
+void valid_simple_free(char *recogedor, ssize_t line_chk, int exit1);
+char *_strcpy(char *dest, char *src);
 #endif
