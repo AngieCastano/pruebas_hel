@@ -31,8 +31,8 @@ int main (
 		{
 			printf("%s ->entring tokenizer\n", path);
 			curpath = finds_path(env, path);
-			pathoken = tokenizer(curpath);
-                        argv = tokenizer(line);
+			pathoken = _strtok(curpath);
+                        argv = _strtok(line);
 			printf("getting location for %s\n", argv[0]);
 			location = NULL;
 			for (iter = 1; pathoken[iter]; iter++)
