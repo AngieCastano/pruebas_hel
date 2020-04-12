@@ -22,45 +22,56 @@ int com_c(char av, char delimiter[])
  * @av: string to split
  * Return: a matrix of strings splited by delimiters
  */
-char** _strtok(char *a, caneca **head)
+//char** _strtok(char *av, char del[])
+int main()
 {
-	if(!a)
-		return(NULL);
+	char* av = "PATH:bin/usr/bin:sadmin/usr/local:/suser";
+	if(!av)
+		return(0);
 	int j = 0, i = 0, palabras = 1, k = 0;
 	char **arr_palabs;
-	char *d = DELIMITER;
-	for (i = 0; a[i]; i++)
+	char del[] = {':','\n',' ','='};
+	for (i = 0; av[i]; i++)
 	{
-		if((com_c(a[i],d) == 1) && (com_c(a[i - 1],d) == 0) && a[i + 1])
+		if((com_c(av[i],del) == 1) && (com_c(av[i - 1],del) == 0))
 		{
 			palabras++;
 		}
 	}
-	arr_palabs = malloc((palabras) * sizeof(char *));
-	add_nodeint_end(head, NULL, arr_palabs);
-	if (!arr_palabs), free_list(head, 1);
+	arr_palabs = malloc((palabras + 1) * sizeof(char *));
 	arr_palabs[palabras] = NULL;
 	palabras = 0;
-	for (i = 0; a[i]; i++)
+	for (i = 0; av[i]; i++)
 	{
-		if ((com_c(a[i],d)) == 0)
+		if ((com_c(av[i],del)) == 0)
 		{
 			j++;
 		}
-		else if((com_c(a[i],d) == 1) && (com_c(a[i - 1],d) == 0))
+		else if((com_c(av[i],del) == 1) && (com_c(av[i - 1],del) == 0))
 		{
 			arr_palabs[palabras] = malloc((j + 1) * sizeof(char));
-			add_nodeint_end(head, arr_palabs[palabras], NULL);
-			if (!arr_palabs[palabras]), free_list(head, 1);
 			k = 0;
 			for(i = i - j; k < j ; i++, k++)
 			{
-				arr_palabs[palabras][k] = a[i];
+				arr_palabs[palabras][k] = av[i];
 			}
 			arr_palabs[palabras][j] = '\0';
 			palabras++;
+		}
+		else
+		{
 			j = 0;
 		}
 	}
-	return(arr_palabs);
+	arr_palabs[palabras] = malloc((j + 1) * sizeof(char));
+	k = 0;
+	for(i = i - j; k < j ; i++, k++)
+	{
+		arr_palabs[palabras][k] = av[i];
+	}
+	arr_palabs[palabras][j] = '\0';
+	for (i = 0; arr_palabs[i] != 00; i++)
+	            printf("palabras: %s\n", arr_palabs[i]);
+//	return(arr_palabs);
+	return(0);
 }
