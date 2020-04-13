@@ -38,7 +38,8 @@ char** _strtok(char *a, caneca **head)
 	}
 	arr_palabs = malloc((palabras) * sizeof(char *));
 	add_nodeint_end(head, NULL, arr_palabs);
-	if (!arr_palabs), free_list(head, 1);
+	if (!arr_palabs)
+		free_list(*head, 1);
 	arr_palabs[palabras] = NULL;
 	palabras = 0;
 	for (i = 0; a[i]; i++)
@@ -51,7 +52,8 @@ char** _strtok(char *a, caneca **head)
 		{
 			arr_palabs[palabras] = malloc((j + 1) * sizeof(char));
 			add_nodeint_end(head, arr_palabs[palabras], NULL);
-			if (!arr_palabs[palabras]), free_list(head, 1);
+			if (!arr_palabs[palabras])
+				free_list(*head, 1);
 			k = 0;
 			for(i = i - j; k < j ; i++, k++)
 			{

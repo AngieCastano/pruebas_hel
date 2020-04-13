@@ -19,7 +19,8 @@ int main (
 	head = NULL;
 	location = malloc(256);
 	add_nodeint_end(&head, location, NULL);
-	if (!location), free_list(head, 0);
+	if (!location)
+		free_list(head, 0);
         write(STDOUT_FILENO, "$", 1);
         line_chk = getline(&line, &size, stdin);
 
@@ -47,14 +48,16 @@ int main (
 			iter = 1;
 		}
 		if (location == NULL)
-			perror("cmd unknown\n");
+		{
+			perror("cmd : command not found");
+		}
 		else
 		{
 			pid1 = fork();
 			if (pid1 == 0)
 			{
 				printf("hijo!!!!!!!!!!\n");
-				execve(location,argv,NULL);
+				execve(location,argv,env);
 			}
 			else
 				wait(NULL);
