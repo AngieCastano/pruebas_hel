@@ -2,8 +2,7 @@
 #include <signal.h>
 void sig_handler (int signal)
 {
-	(void) signal;
-	exit(0);
+	write(STDOUT_FILENO, "\n$", 2);
 }
 int main (
 	int ac __attribute__((unused)),
@@ -31,11 +30,14 @@ int main (
         line_chk = getline(&line, &size, stdin);
         while (_strcmp(line, SH_KILLER) != 0)
         {
+//		write(STDOUT_FILENO, "$", 1);
+//		line_chk = getline(&line, &size, stdin);
 		if (line_chk == -1)
 		{
 //			write(STDOUT_FILENO, "failed reading input\n", 22);
 			free_list(head, 2);
 		}
+		/* si fd falla*/
                 if (line_chk > 0)
 		{
 //			printf("%s ->entring tokenizer\n", path);
@@ -43,31 +45,33 @@ int main (
 			pathoken = _strtok(curpath, &head);
 			argv = _strtok(line, &head);
 			fd = works_as_address (argv[0], argv, env);
-			wait(NULL);
-//			printf("getting location for %s\n", argv[0]);
-			location = NULL;
-			for (iter = 1; pathoken[iter]; iter++)
+			if (fd != 0)
 			{
-				location = matcher(argv[0], pathoken[iter]);
-				if (location != NULL)
-					break;
+
+				location = NULL;
+				for (iter = 1; pathoken[iter]; iter++)
+				{
+					location = matcher(argv[0], pathoken[iter]);
+					if (location != NULL)
+						break;
+				}
+				iter = 1;
 			}
-			iter = 1;
-		}
-		if (location == NULL)
-		{
-//			perror("cmd : command not found");
 		}
 		if (fd == 0)
 			location = argv[0];
-		pid1 = fork();
-		if (pid1 == 0)
+		if (location != NULL)
 		{
-//			printf("hijo!!!!!!!!!!\n");
-			execve(location,argv,env);
+			pid1 = fork();
+			if (pid1 == 0)
+			{
+				execve(location,argv,env);
+			}
+			else
+				wait(NULL);
 		}
 		else
-			wait(NULL);
+			printf("No me mandes basura pinche humano!\n");
 		write(STDOUT_FILENO, "$", 1);
 		line_chk = getline(&line, &size, stdin);
 	}

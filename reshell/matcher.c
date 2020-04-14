@@ -22,7 +22,7 @@ char* matcher(char *command, char* directory)
 	pDir = opendir(directory);
 	if (pDir == NULL)
 	{
-//		printf ("Cannot open directory %s\n", directory);
+		printf ("Cannot open directory %s\n", directory);
 		return (NULL);
 	}
 	while ((pDirent = readdir(pDir)) != NULL)
