@@ -10,6 +10,11 @@
 #include <string.h>
 #include <sys/types.h>
 #include <dirent.h>
+#include <signal.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <signal.h>
 /**
  * struct caneca - recives address to free
  * @mugre: (malloc'ed pointer)
@@ -32,4 +37,8 @@ int com_c(char av, char delimiter[]);
 caneca *add_nodeint_end(caneca **head, char *mugre, char **mugre2);
 void print_listint(caneca *h);
 void free_list(caneca *head, int retorno);
+int _strcmp(char *s1, char *s2);
+int works_as_address (char *argv0, char **argv, char *env[]);
+void control_c(int sig);
+void sig_handler(int signal);
 #endif
