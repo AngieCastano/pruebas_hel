@@ -1,5 +1,10 @@
 #include "shell.h"
-
+#include <signal.h>
+void sig_handler (int signal)
+{
+	(void) signal;
+	exit(0);
+}
 int main (
 	int ac __attribute__((unused)),
 	char *av[] __attribute__((unused)),
@@ -13,7 +18,7 @@ int main (
 	char *curpath, *path = "PATH";
 	char *location;
 	char **pathoken;
-	int iter;
+	int iter, fd;
 	int status;
 	caneca *head;
 	head = NULL;
@@ -21,23 +26,25 @@ int main (
 	add_nodeint_end(&head, location, NULL);
 	if (!location)
 		free_list(head, 0);
+	signal(SIGINT, sig_handler);
         write(STDOUT_FILENO, "$", 1);
         line_chk = getline(&line, &size, stdin);
-
-        while (strcmp(line, SH_KILLER) != 0)
+        while (_strcmp(line, SH_KILLER) != 0)
         {
-                if (line_chk == -1)
+		if (line_chk == -1)
 		{
-                        write(STDOUT_FILENO, "failed reading input\n", 22);
+//			write(STDOUT_FILENO, "failed reading input\n", 22);
 			free_list(head, 2);
 		}
                 if (line_chk > 0)
 		{
-			printf("%s ->entring tokenizer\n", path);
+//			printf("%s ->entring tokenizer\n", path);
 			curpath = finds_path(env, path);
 			pathoken = _strtok(curpath, &head);
-                        argv = _strtok(line, &head);
-			printf("getting location for %s\n", argv[0]);
+			argv = _strtok(line, &head);
+			fd = works_as_address (argv[0], argv, env);
+			wait(NULL);
+//			printf("getting location for %s\n", argv[0]);
 			location = NULL;
 			for (iter = 1; pathoken[iter]; iter++)
 			{
@@ -49,24 +56,23 @@ int main (
 		}
 		if (location == NULL)
 		{
-			perror("cmd : command not found");
+//			perror("cmd : command not found");
+		}
+		if (fd == 0)
+			location = argv[0];
+		pid1 = fork();
+		if (pid1 == 0)
+		{
+//			printf("hijo!!!!!!!!!!\n");
+			execve(location,argv,env);
 		}
 		else
-		{
-			pid1 = fork();
-			if (pid1 == 0)
-			{
-				printf("hijo!!!!!!!!!!\n");
-				execve(location,argv,env);
-			}
-			else
-				wait(NULL);
-		}
+			wait(NULL);
 		write(STDOUT_FILENO, "$", 1);
 		line_chk = getline(&line, &size, stdin);
 	}
 	add_nodeint_end(&head, line, NULL);
 	free_list(head, 0);
-        printf("bye! bitches\n");
+//        printf("bye! bitches\n");
         return (0);
 }

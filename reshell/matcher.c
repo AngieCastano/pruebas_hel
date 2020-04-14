@@ -9,6 +9,7 @@ char *_strcat(char *dest, char *src)
 	}
 	for (j = 0; src[j] != '\0'; j++)
 		dest[i + j] = src[j];
+	dest[i + j] = '\0';
 	return (dest);
 }
 char* matcher(char *command, char* directory)
@@ -21,7 +22,7 @@ char* matcher(char *command, char* directory)
 	pDir = opendir(directory);
 	if (pDir == NULL)
 	{
-		printf ("Cannot open directory %s\n", directory);
+//		printf ("Cannot open directory %s\n", directory);
 		return (NULL);
 	}
 	while ((pDirent = readdir(pDir)) != NULL)
